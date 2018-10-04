@@ -1,0 +1,62 @@
+#include <cmath>
+#include <iostream>
+#include "poligono.h"
+
+using namespace std;
+
+#define PI 3.14159265
+
+/**@brief Construtor
+ * @details inicializa todos os vertices com com (0, 0) e o numero de vertices igual a 0
+ **/
+Poligono::Poligono(void)
+{
+    nVert=0;
+    for(int i=0; i<100;i++){
+        vert[i].setXY(0.0, 0.0);
+    }
+}
+void Poligono::insereVertice(Point p){
+    int TamAntigo = nVert;
+    if (TamAntigo == 100){
+        cout << "Tamanho maximo!!!";
+        return;
+    }
+    else{
+        for(int i=0; i<TamAntigo; i++){
+            if(vert[i].getX() == p.getX() && vert[i].getY() == p.getY()){
+                cout << "Este poligono ja possui este ponto!";
+            }
+            return;
+        }
+        vert[TamAntigo].setXY(p.getX(), p.getY());
+        nVert++;
+    }
+}
+int Poligono::qtdeVertice(){
+    return nVert;
+}
+//Metodo de shoelance para calcular area
+float Poligono::areaPoligono(){
+    float area = 0.0, areaDiagPrinc=0.0, areaDiagSec=0.0;
+    for(int i=0; i<nVert-2; i++){
+        areaDiagPrinc+= vert[i].getX()*vert[i+1].getY();
+    }
+    areaDiagPrinc+=vert[nVert-1].getX()*vert[0].getY();
+    for(int i=1; i<nVert; i++){
+        areaDiagSec+= vert[i].getX()*vert[i-1].getY();
+    }
+    areaDiagSec+=vert[0].getX()*vert[nVert-1].getY();
+
+    area = areaDiagPrinc - areaDiagSec;
+    area = abs(area)/2;
+    return area;
+}
+void Poligono::transladaPoligono(float a, float b){
+    for(int i=0; i<nVert; i++){
+        vert[i].translada(a, b);
+    }
+}
+void Poligono::rotacionaPoligono(float theta){
+    float angRad = theta * 180 / P
+}
